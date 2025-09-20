@@ -58,6 +58,9 @@ async def handle_query(request: QueryRequest):
 
     global qa_chain
 
+    if not request.query:
+        return QueryResponse(answer="Query cannot be empty.")
+    
     try:   
         # invoke on seperate thread to avoid blocking
         await asyncio.to_thread(lambda: increment_counter())
@@ -68,9 +71,9 @@ async def handle_query(request: QueryRequest):
         result = await asyncio.to_thread(qa_chain.invoke, {"query": request.query})
         end_invoke_time = time.time()
         invoke_latency = end_invoke_time - start_invoke_time
-
+        
         logger.info(f"Request Counter: {counter_value} | LLM Invoke Latency: {invoke_latency:.4f}s")
-
+        
         return QueryResponse(answer=result["result"])
     except Exception as e:
         logger.error(f"Error handling query: {e}")

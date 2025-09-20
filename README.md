@@ -5,13 +5,12 @@ This project is a FastAPI application that acts as a Q&A service for Disneyland 
 Query Endpoint: A /query endpoint that accepts user questions and returns a generated answer from the LLM.
 
 - Local LLM Integration: The application is configured to use a local Ollama model (llama3.1:8b) for all Q&A logic, eliminating the need for external API calls to services like OpenAI.
-
 - Asynchronous Operations: The application uses asyncio to handle blocking operations like the LLM invocation in a separate thread, ensuring the API remains responsive and non-blocking.
+- FAISS Vector Store: The project uses FAISS to efficiently search and retrieve relevant document chunks, which is essential for the RAG pipeline's performance and accuracy.
 
 ## Performance Monitoring:
 
 - Request Counter: A database-backed counter tracks the total number of requests to the API.
-
 - LLM Latency: Dedicated logging within the /query endpoint captures the specific time taken for the LLM's response, allowing for granular performance analysis of the most critical component.
 
 ## Installation & Setup
@@ -42,12 +41,16 @@ To interact with the API, send a POST request to the /query endpoint with a JSON
     }'`
   - Response:<br>
     `{"answer":"Based on the reviews, it seems that two reviewers (Review_ID: 594712008 and Review_ID: 670570869) mentioned that March is a good time to visit Disneyland because of the good weather. Another reviewer (Review_ID: 660034324) also mentioned that March was a good time for them.\n\nHowever, one reviewer (Review_ID: 594712008) specifically mentioned that April or May are too hot and not recommended.\n\nSince spring in Hong Kong typically falls in March to May, it can be inferred that visiting Disneyland during this period might be a good idea due to the pleasant weather."}`
-
 - Reset Requests Counter:
   `curl http://127.0.0.1:8000/reset_counter`
   
 ## Project Structure
-- `main.py`: The core FastAPI application, including the main API endpoints and middleware.
-- `db_utils.p`y: Contains utility functions for interacting with the SQLite database to manage the request counter.
-- `services.py`: Handles the setup of the Retrieval-Augmented Generation (RAG) chain, including loading data, chunking documents, and initializing the Ollama LLM and embeddings.
+- `app/main.py`: The core FastAPI application, including the main API endpoints and middleware.
+- `app/db_utils.p`y: Contains utility functions for interacting with the SQLite database to manage the request counter.
+- `app/services.py`: Handles the setup of the Retrieval-Augmented Generation (RAG) chain, including loading data, chunking documents, and initializing the Ollama LLM and embeddings.
 - `requirements.txt`: Lists all the necessary Python packages for the project.
+
+## Testing
+`tests/test_api.py`: Contains the test suite for the FastAPI application.
+- Note: To run the tests, ensure your FastAPI application is running and then execute the following command from the project's root directory:
+`pytest`
