@@ -17,8 +17,8 @@ Query Endpoint: A /query endpoint that accepts user questions and returns a gene
 ## Installation & Setup
 
 1. Clone the repository:
-2. `git clone <your_repo_url>`
-3. `cd <your_project_directory>`
+2. `git clone https://github.com/TheGuinz/disney_reviews_rag.git`
+3. `cd disney_reviews_rag`
 4. Install Ollama: Download and install Ollama from the official website. This will set up the local server needed to run the LLM.
 5. Pull the LLM and Embedding Models:
 The application uses a separate model for generating text embeddings, which are numerical representations of the text. These embeddings are crucial for the Retrieval-Augmented Generation (RAG) process, allowing the system to quickly find the most relevant document chunks from the Disneyland reviews.
